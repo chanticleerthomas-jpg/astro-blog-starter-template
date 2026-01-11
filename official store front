@@ -1,0 +1,26 @@
+chantys-hair-store/
+├─ public/
+│  └─ images/          # Hair product images
+├─ src/
+│  ├─ components/
+│  │  ├─ Navigation.astro
+│  │  ├─ Footer.astro
+│  │  ├─ ProductCard.astro
+│  │  └─ CartSidebar.astro
+│  ├─ layouts/
+│  │  └─ BaseLayout.astro
+│  ├─ pages/
+│  │  ├─ index.astro
+│  │  ├─ shop.astro
+│  │  ├─ product/[slug].astro
+│  │  ├─ about.astro
+│  │  ├─ contact.astro
+│  │  └─ policies.astro
+│  ├─ styles/
+│  │  └─ globals.css
+│  └─ data/
+│     └─ mock.js       # Products, categories, testimonials
+├─ package.json
+└─ astro.config.mjs
+
+
