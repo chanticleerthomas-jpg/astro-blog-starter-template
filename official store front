@@ -23,4 +23,118 @@ chantys-hair-store/
 ├─ package.json
 └─ astro.config.mjs
 
+src/data/mock.js
+export const categories = [
+  { id: 'bundles', name: 'Hair Bundles' },
+  { id: 'lace-front', name: 'Lace Front Wigs' },
+  { id: 'full-lace', name: 'Full Lace Wigs' },
+  { id: 'closures', name: 'Closures' },
+];
+
+export const products = [
+  {
+    id: 'wig-001',
+    slug: 'silky-straight-lace-front',
+    name: 'Silky Straight Lace Front Wig',
+    category: 'lace-front',
+    price: 289,
+    images: ['/images/wigs/silky-straight-1.jpg'],
+    description: 'Premium lace front wig with ultra-realistic scalp and natural hairline.',
+    lengthOptions: ['18"', '20"', '22"'],
+    featured: true,
+  },
+  {
+    id: 'bundle-001',
+    slug: 'brazilian-body-wave',
+    name: 'Brazilian Body Wave Bundle',
+    category: 'bundles',
+    price: 119,
+    images: ['/images/bundles/body-wave-1.jpg'],
+    description: 'Soft, full Brazilian body wave bundles with long-lasting texture.',
+    lengthOptions: ['16"', '18"', '20"'],
+    featured: true,
+  },
+];
+
+ProductCard.astro
+--- 
+const { product } = Astro.props;
+---
+<article class="product-card">
+  <a href={`/product/${product.slug}`}>
+    <img src={product.images[0]} alt={product.name} loading="lazy" />
+    <h3>{product.name}</h3>
+    <p>${product.price}</p>
+  </a>
+</article>
+
+Navigation.astro
+<nav>
+  <a href="/">Home</a>
+  <a href="/shop">Shop</a>
+  <a href="/about">About</a>
+  <a href="/contact">Contact</a>
+  <button id="cart-btn">Cart</button>
+</nav>
+
+index.astro (Home)
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { products } from '../data/mock';
+---
+
+<BaseLayout>
+  <section class="hero">
+    <h1>Chanty’s Hair Co.</h1>
+    <p>Luxury Human Hair, Delivered Fast</p>
+  </section>
+
+  <section class="featured">
+    <h2>Featured Products</h2>
+    <div class="grid">
+      {products.filter(p => p.featured).map(p => (
+        <ProductCard product={p} />
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+shop.astro
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import { products } from '../data/mock';
+---
+
+<BaseLayout>
+  <h1>Shop All Products</h1>
+  <div class="grid">
+    {products.map(p => (
+      <ProductCard product={p} />
+    ))}
+  </div>
+</BaseLayout>
+
+body { background: #fffef2; color: #333; font-family: 'Suisse', sans-serif; }
+button { border-radius: 0; }
+a { text-decoration: none; color: inherit; }
+.grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+
+npm create astro@latest chantys-hair-store
+cd chantys-hair-store
+npm install  
+
+astro.config.mjs:
+import { defineConfig } from 'astro/config';
+import cloudflare from '@astrojs/cloudflare';
+
+export default defineConfig({
+  output: 'server',
+  adapter: cloudflare(),
+});
+
+
+
+
 
